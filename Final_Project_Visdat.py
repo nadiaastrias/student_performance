@@ -226,14 +226,14 @@ elif study_analysis_type == "Analisis Detail per Nilai":
             fig_study_detail = px.scatter(filtered_df, x="studytime", y=selected_grade_study, 
                                         color="sex", size="absences",
                                         hover_data=["age", "school"], 
-                                        title=f"Waktu Belajar vs {selected_grade_study}")
+                                        title=f"Waktu Belajar vs {selected_grade_study}", color_discrete_map={'M': '#45B7D1', 'F': '#FF6B6B'})
         elif chart_type == "Box Plot":
             fig_study_detail = px.box(filtered_df, x="studytime", y=selected_grade_study, 
-                                    color="sex", title=f"Distribusi {selected_grade_study} per Waktu Belajar")
+                                    color="sex", title=f"Distribusi {selected_grade_study} per Waktu Belajar",  color_discrete_map={'M': '#45B7D1', 'F': '#FF6B6B'})
         else:  # Violin Plot
             fig_study_detail = px.violin(filtered_df, x="studytime", y=selected_grade_study, 
                                        color="sex", box=True,
-                                       title=f"Distribusi {selected_grade_study} per Waktu Belajar")
+                                       title=f"Distribusi {selected_grade_study} per Waktu Belajar",  color_discrete_map={'M': '#45B7D1', 'F': '#FF6B6B'})
         
         st.plotly_chart(fig_study_detail, use_container_width=True)
 
@@ -559,23 +559,23 @@ with col2:
         fig_explore = px.scatter(
             filtered_df, x=x_axis, y=y_axis, color=color_by,
             hover_data=['age', 'school', 'studytime'],
-            title=f"{y_axis} vs {x_axis} (colored by {color_by})", color_continuous_scale='RdBu'
+            title=f"{y_axis} vs {x_axis} (colored by {color_by})", color_discrete_sequence=["red", "blue"]
         )
     elif chart_type_explore == 'Box Plot':
         fig_explore = px.box(
             filtered_df, x=x_axis, y=y_axis, color=color_by,
-            title=f"Distribusi {y_axis} berdasarkan {x_axis}", color_continuous_scale='RdBu'
+            title=f"Distribusi {y_axis} berdasarkan {x_axis}", color_discrete_sequence=["red", "blue"]
         )
     elif chart_type_explore == 'Violin Plot':
         fig_explore = px.violin(
             filtered_df, x=x_axis, y=y_axis, color=color_by,
-            box=True, title=f"Distribusi {y_axis} berdasarkan {x_axis}", color_continuous_scale='RdBu'
+            box=True, title=f"Distribusi {y_axis} berdasarkan {x_axis}", ccolor_discrete_sequence=["red", "blue"]
         )
     else:  # Bar Chart
         avg_data = filtered_df.groupby([x_axis, color_by])[y_axis].mean().reset_index()
         fig_explore = px.bar(
             avg_data, x=x_axis, y=y_axis, color=color_by,
-            title=f"Rata-rata {y_axis} berdasarkan {x_axis}", color_continuous_scale='RdBu'
+            title=f"Rata-rata {y_axis} berdasarkan {x_axis}", color_discrete_sequence=["red", "blue"]
         )
     
     st.plotly_chart(fig_explore, use_container_width=True)
